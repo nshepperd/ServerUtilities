@@ -604,8 +604,11 @@ serverutilities.gui.backup.restore_global_confirm_desc=This will also restore gl
 # Pause When Empty
 cmd.pause_when_empty_updated=Server property 'pause-when-empty-seconds' set to %d
 cmd.pause_when_empty_mask=Ignoring 'pause-when-empty-seconds' for the next %d seconds. Set to 0 to cancel masking.
-commands.pause_when_empty.set.usage=/pause_when_empty set <seconds> (0 to disable)
-commands.pause_when_empty.mask.usage=/pause_when_empty mask <seconds> (temporary: don't pause for the next x seconds from now)
+commands.pause_when_empty.set.usage=/pause_when_empty set <duration>[h|m|s] (0 to disable)
+commands.pause_when_empty.mask.usage=/pause_when_empty mask <duration>[h|m|s] (temporary: don't pause for the given duration, starting now)
+serverutilities.lang.duration.invalid=Invalid duration `%s`. Use format <number>[h|m|s].
+serverutilities.lang.duration.negative=Invalid duration `%s`. Duration must be nonnegative.
+
 
 # Gui
 ## Buttons

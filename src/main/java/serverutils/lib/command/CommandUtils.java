@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.OptionalInt;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -189,5 +191,32 @@ public class CommandUtils {
             list.add(command);
         }
         return list;
+    }
+
+    public static OptionalInt parseDuration(ICommandSender sender, String[] args, int index) throws CommandException {
+        if (args.length <= index) {
+            return OptionalInt.empty();
+        }
+
+        String arg = args[index].toLowerCase();
+        Pattern r = Pattern.compile("(-?[0-9]+)([hms]?)");
+        Matcher m = r.matcher(args[0]);
+        if (!m.matches()) {
+            throw new CommandException("serverutilities.lang.duration.invalid", arg);
+        }
+        int num = CommandBase.parseInt(sender, m.group(1));
+        if (num < 0) {
+            throw new CommandException("serverutilities.lang.duration.negative", arg);
+        }
+        switch (m.group(2)) {
+            case "h":
+                return OptionalInt.of(num * 3600);
+            case "m":
+                return OptionalInt.of(num * 60);
+            case "s":
+            case "":
+                return OptionalInt.of(num);
+        }
+        throw new RuntimeException("Unreachable");
     }
 }
